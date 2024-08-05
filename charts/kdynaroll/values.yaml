@@ -1,0 +1,11 @@
+replicaCount: 1
+image:
+  repository: biraignacio/kdynaroll
+  tag: v0.1.0
+  pullPolicy: IfNotPresent
+
+kdynaroll:
+  env:
+    logLevel: "INFO"
+    metricsBindIpAddr: "0.0.0.0"
+    metricsBindPort: 5085

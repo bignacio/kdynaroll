@@ -1,0 +1,63 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: kdynarolls.shiftflow.ml
+spec:
+  group: shiftflow.ml
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                podLabeler:
+                  type: object
+                  properties:
+                    namespaces:
+                      type: array
+                      minItems: 1
+                      items:
+                        type: object
+                        properties:
+                          namespace:
+                            type: string
+                          apps:
+                            type: array
+                            minItems: 1
+                            items:
+                              type: object
+                              properties:
+                                app:
+                                  type: string
+                                labels:
+                                  type: array
+                                  minItems: 1
+                                  items:
+                                    type: object
+                                    properties:
+                                      labelName:
+                                        type: string
+                                      labelValueDistribution:
+                                        type: array
+                                        minItems: 1
+                                        items:
+                                          type: object
+                                          properties:
+                                            value:
+                                              type: string
+                                            percentage:
+                                              type: number
+                                              format: float
+
+  scope: Namespaced
+  names:
+    plural: kdynarolls
+    singular: kdynaroll
+    kind: Kdynaroll
+    shortNames:
+      - kdynr

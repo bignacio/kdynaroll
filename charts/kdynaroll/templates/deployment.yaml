@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-controller
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      serviceAccountName: {{ .Release.Name }}-sa
+      containers:
+      - name: kdynaroll-controller
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+        ports:
+        - name: metrics
+          containerPort: {{ .Values.kdynaroll.env.metricsBindPort }}
+          protocol: TCP
+
+
+        env:
+        - name: RUST_LOG
+          value: {{ .Values.kdynaroll.env.logLevel }}
+        - name: KDYNAROLL_METRICS_BIND_ADDR
+          value: "{{ .Values.kdynaroll.env.metricsBindIpAddr }}:{{ .Values.kdynaroll.env.metricsBindPort }}"
+        - name: KDYNAROLL_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace

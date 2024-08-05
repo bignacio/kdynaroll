@@ -1,0 +1,24 @@
+apiVersion: shiftflow.ml/v1
+kind: Kdynaroll
+metadata:
+  name: kdynaroll-controller-config
+  namespace: default
+spec:
+  podLabeler:
+    namespaces:
+    - namespace: loadbalancer
+      apps:
+      - app: nginx
+        labels:
+        - labelName: feature
+          labelValueDistribution:
+          - value: "version1"
+            percentage: 50.0
+          - value: "version2"
+            percentage: 50.0
+        - labelName: earlyaccess
+          labelValueDistribution:
+          - value: "alpha"
+            percentage: 25.0
+          - value: "beta"
+            percentage: 75.0

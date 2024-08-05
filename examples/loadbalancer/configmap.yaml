@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap
+  namespace: loadbalancer
+data:
+  nginx.conf: |
+    events {
+      worker_connections 1024;
+    }
+    http {
+      log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for" '
+                        'pod_hostname=$hostname';
+      access_log /proc/self/fd/1 main;
+      error_log /proc/self/fd/2;
+
+      server {
+        listen 80;
+
+        location /checkit/v1 {
+          access_log /proc/self/fd/1 main;
+          return 200 'Hello from checkit-v1';
+        }
+
+        location /checkit/v2 {
+          access_log /proc/self/fd/1 main;
+          return 200 'Hello from checkit-v2';
+        }
+      }
+    }

@@ -15,7 +15,7 @@ KDynaRoll was originally created to address a very particular use case, combinin
 
 This is a slightly more generic version of the original use case and it hasn't been stress tested as much, hence the **beta status**.
 
-I'd very much like to hear about other cases and requirements you may have. Open an issue I'll check it out!
+I'd very much like to hear about other cases and requirements you may have. Open an [issue](https://github.com/bignacio/kdynaroll/issues) I'll check it out!
 
 Here are some other applications for KDynaRoll:
 
@@ -119,7 +119,7 @@ metadata:
 KDynaRoll currently applies only to applications with the label app. Ensure your target applications include this label.
 
 
-See [the loadbalancer](examples/loadbalancer/crd-config.yaml) for an example CRD config file.
+See [loadbalancer](examples/loadbalancer/crd-config.yaml) for an example CRD config file.
 
 
 ## FAQ
